@@ -1,11 +1,17 @@
-databases:
-  - name: listmonk-db
-    databaseName: listmonk
-    user: listmonk
+services:
+  - type: pserv
+    name: listmonk-db
+    env: postgres
     plan: free
     region: oregon
+    envVars:
+      - key: POSTGRES_DB
+        value: listmonk
+      - key: POSTGRES_USER
+        value: listmonk
+      - key: POSTGRES_PASSWORD
+        value: changeme123
 
-services:
   - type: web
     name: listmonk
     env: docker
@@ -31,8 +37,8 @@ services:
           name: listmonk-db
           property: port
       - key: LISTMONK_db__user
-        sync: false
+        value: listmonk
       - key: LISTMONK_db__password
-        sync: false
+        value: changeme123
       - key: LISTMONK_db__database
-        sync: false
+        value: listmonk
