@@ -2,7 +2,7 @@ services:
   - type: web
     name: listmonk
     env: docker
-    repo: https://github.com/your-username/listmonk
+    repo: https://github.com/codebloq/listmonk
     region: oregon
     plan: free
     branch: master
@@ -24,20 +24,11 @@ services:
           name: listmonk-db
           property: port
       - key: LISTMONK_db__user
-        fromService:
-          type: pserv
-          name: listmonk-db
-          property: user
+        sync: false
       - key: LISTMONK_db__password
-        fromService:
-          type: pserv
-          name: listmonk-db
-          property: password
+        sync: false
       - key: LISTMONK_db__database
-        fromService:
-          type: pserv
-          name: listmonk-db
-          property: database
+        sync: false
 
 databases:
   - name: listmonk-db
