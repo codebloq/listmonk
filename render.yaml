@@ -1,3 +1,10 @@
+databases:
+  - name: listmonk-db
+    databaseName: listmonk
+    user: listmonk
+    plan: free
+    region: oregon
+
 services:
   - type: web
     name: listmonk
@@ -29,10 +36,3 @@ services:
         sync: false
       - key: LISTMONK_db__database
         sync: false
-
-databases:
-  - name: listmonk-db
-    databaseName: listmonk
-    user: listmonk
-    plan: free
-    region: oregon
