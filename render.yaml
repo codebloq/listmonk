@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: listmonk
+    env: docker
+    repo: https://github.com/codebloq/listmonk
+    region: oregon
+    plan: free
+    branch: master
+    dockerfilePath: Dockerfile
+    buildCommand: ./listmonk --install --yes
+    startCommand: ./listmonk --serve
+    envVars:
+      - key: LISTMONK_app__admin_username
+        value: admin
+      - key: LISTMONK_app__admin_password
+        value: changeme123
+      - key: LISTMONK_db__host
+        fromService:
+          type: pserv
+          name: listmonk-db
+      - key: LISTMONK_db__port
+        value: "5432"
+      - key: LISTMONK_db__user
+        fromService:
+          type: pserv
+          name: listmonk-db
+          property: user
+      - key: LISTMONK_db__password
+        fromService:
+          type: pserv
+          name: listmonk-db
+          property: password
+      - key: LISTMONK_db__database
+        fromService:
+          type: pserv
+          name: listmonk-db
+          property: database
+
+databases:
+  - name: listmonk-db
+    databaseName: listmonk
+    user: listmonk
+    plan: free
+    region: singapore
