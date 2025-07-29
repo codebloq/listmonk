@@ -8,7 +8,6 @@ services:
     branch: master
     dockerfilePath: Dockerfile
     buildCommand: ./listmonk --install --yes
-    startCommand: ./listmonk --serve
     envVars:
       - key: LISTMONK_app__admin_username
         value: admin
@@ -18,27 +17,20 @@ services:
         fromService:
           type: pserv
           name: listmonk-db
+          property: host
       - key: LISTMONK_db__port
         value: "5432"
       - key: LISTMONK_db__user
-        fromService:
-          type: pserv
-          name: listmonk-db
-          property: user
+        sync: false
       - key: LISTMONK_db__password
-        fromService:
-          type: pserv
-          name: listmonk-db
-          property: password
+        sync: false
       - key: LISTMONK_db__database
-        fromService:
-          type: pserv
-          name: listmonk-db
-          property: database
+        sync: false
 
 databases:
   - name: listmonk-db
     databaseName: listmonk
     user: listmonk
+    password: listmonkpass
     plan: free
     region: singapore
