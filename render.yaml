@@ -1,22 +1,9 @@
 services:
-  - type: pserv
-    name: listmonk-db
-    env: postgres
-    plan: free
-    region: oregon
-    envVars:
-      - key: POSTGRES_DB
-        value: listmonk
-      - key: POSTGRES_USER
-        value: listmonk
-      - key: POSTGRES_PASSWORD
-        value: changeme123
-
   - type: web
     name: listmonk
     env: docker
     repo: https://github.com/codebloq/listmonk
-    region: oregon
+    region: singapore
     plan: free
     branch: master
     dockerfilePath: Dockerfile
@@ -28,17 +15,26 @@ services:
         value: changeme123
       - key: LISTMONK_db__host
         fromService:
-          type: pserv
+          type: database
           name: listmonk-db
           property: host
       - key: LISTMONK_db__port
         fromService:
-          type: pserv
+          type: database
           name: listmonk-db
           property: port
       - key: LISTMONK_db__user
-        value: listmonk
+        fromService:
+          type: database
+          name: listmonk-db
+          property: user
       - key: LISTMONK_db__password
-        value: changeme123
+        fromService:
+          type: database
+          name: listmonk-db
+          property: password
       - key: LISTMONK_db__database
-        value: listmonk
+        fromService:
+          type: database
+          name: listmonk-db
+          property: database
